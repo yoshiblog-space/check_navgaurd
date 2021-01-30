@@ -9,18 +9,26 @@ const TestComponent = { // アクセスさせない画面を持つコンポー�
   },
   beforeRouteEnter(to, from, next) { // [3]
     console.log('component: beforeRouteEnter');
+    console.log(to)
+    console.log(to.params.id)
     next();
   },
   beforeRouteUpdate(to, from, next) { // [4]
     console.log('component: beforeRouteUpdate');
+    console.log(to)
     console.log(to.params.id)
     if (to.params.id === 'hanako'){
-      alert("ハナコぉぉぉ");
-      next('/');
+      // alert("ハナコぉぉぉ");
+
+      next();
     }else{
       next();
     }
-
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('component: beforeRouteLeave');
+    console.log(to.params)
+    next();
   }
 };
 
@@ -40,12 +48,14 @@ const routes = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
     beforeEnter: (to, from, next) => { // [2]
       console.log('router: beforeEnter');
-
+      console.log(to)
       next();
     }
   },
   {
-    path: '/user/:id', component: TestComponent, 
+    path: '/user/:id', 
+    name: 'user',
+    component: TestComponent, 
     beforeEnter: (to, from, next) => { // [2]
       console.log('router: beforeEnter');
       
